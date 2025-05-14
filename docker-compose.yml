@@ -1,0 +1,31 @@
+# Mthokozisi Duba u24690059
+
+services:
+  backend:
+    build:
+      context: ./u24690059_A3_backend
+      dockerfile: DockerFile
+    image: a3-backend
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./u24690059_A3_backend:/app
+    environment:
+      - NODE_ENV=development
+      - HOST=0.0.0.0
+  frontend:
+    build:
+      context: ./u24690059_A3_frontend
+      dockerfile: Dockerfile
+    image: a3-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - frontend_node_modules:/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - NUXT_PUBLIC_API_URL=http://backend:1337
+    depends_on:
+      - backend
+volumes:
+  frontend_node_modules:
